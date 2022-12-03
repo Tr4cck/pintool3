@@ -1,11 +1,16 @@
 # Pintool3
+
 pintool3 is an improved version of the pintool2.py script written by sebastiendamaye, available here (https://github.com/sebastiendamaye/pintool2).
+
 I migrate it to python3, polish its coding style and improve it with new features.
+
 This tool can be useful for solving some reversing challenges in CTFs events.
 Implements the technique described here (http://shell-storm.org/blog/A-binary-analysis-count-me-if-you-can/). 
 
 ## Configuration
+
 You must configure your `PINBASEPATH` inside the script:
+
 ```python
 PINBASEPATH = 'change me'
 PIN = PINBASEPATH + 'pin'
@@ -14,6 +19,7 @@ INSCOUNT64 = PINBASEPATH + 'source/tools/ManualExamples/obj-intel64/inscount0.so
 ```
 
 ## Help
+
 ```sh
 usage: pintool3.py [-h] [-e] [-l PASSLEN] [-c CHARNUM] [-b EXCHAR] [-a ARCH] [-i INITPASS] [-s SYMBFILL] [-d EXPRESSION] [-r] filename
 
@@ -36,28 +42,39 @@ Examples:
   ./pintool3.py -l 30 -c 1,2,3 -b _{} -s - -a 32 test/baleful
   ./pintool3.py -l 37 -c 4 -i CTF{ -b }_ -s - -a 32 -d '=> 1200' test/reverse400
   ./pintool3.py -c 1,2,3 -b _ -s - -l 28 -d '=> 6000' test/wyvern
-  ./pintool3.py -r -l 32 -c 1,2,3 -b _{$} -s - 01f47d58806a8264cd4b2b97b9dabb4a
+  ./pintool3.py -r -l 32 -c 1,2,3 -b _{$} -s - -a 32 test/01f47d58806a8264cd4b2b97b9dabb4a
+  ./pintool3.py -l 23 -c 1,2,3 -b _@! -s - -d '== 16' test/main
 ```
 
 ## Examples
+
 **Baleful - picoCTF 2014**
 
-![](baleful.gif)
+![](gifs/baleful.gif)
 
 **Reverse 400 - Hack You 2014**
 
-![](reverse400.gif)
+![](gifs/reverse400.gif)
 
 **wyvern 500 - CSAW CTF 2015**
 
-![](wyvern.gif)
+![](gifs/wyvern.gif)
 
-**rev100 - th3jackers CTF 2015**
 
-![](rev100.gif)
-```sh
-$ ./pintool2.py -r -l 32 -c 1,2,3 -b _{$} -s - 01f47d58806a8264cd4b2b97b9dabb4a
-```
+
+**loginme - XDUKY CTF 2022**
+
+![](gifs/loginme.gif)
+
+
+
+## TODO
+
+- [ ] CodCode Cleanup
+
+- [ ] Error Control
+
+- [ ] More logical logger
 
 License
 ----
