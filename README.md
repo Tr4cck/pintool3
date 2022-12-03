@@ -1,59 +1,45 @@
-# Pintool2
-pintool2 is an improved version of the pintool.py script written by wagiro (Eduardo García),
-available here (https://github.com/wagiro/pintool).
-
-This version integrates an additional reverse order option to brute force password in reverse order (starts from the end).
-
+# Pintool3
+pintool3 is an improved version of the pintool2.py script written by sebastiendamaye, available here (https://github.com/sebastiendamaye/pintool2).
+I migrate it to python3, polish its coding style and improve it with new features.
 This tool can be useful for solving some reversing challenges in CTFs events.
 Implements the technique described here (http://shell-storm.org/blog/A-binary-analysis-count-me-if-you-can/). 
 
-### Configuration
-You must configure your pin PATH inside of script
-
-```sh
-PINBASEPATH = "/data/pin-3.0-76991-gcc-linux"
-PIN = "%s/pin" % PINBASEPATH
-INSCOUNT32 = "%s/source/tools/ManualExamples/obj-ia32/inscount0.so" % PINBASEPATH
-INSCOUNT64 = "%s/source/tools/ManualExamples/obj-intel64/inscount0.so" % PINBASEPATH
+## Configuration
+You must configure your `PINBASEPATH` inside the script:
+```python
+PINBASEPATH = 'change me'
+PIN = PINBASEPATH + 'pin'
+INSCOUNT32 = PINBASEPATH + 'source/tools/ManualExamples/obj-ia32/inscount0.so'
+INSCOUNT64 = PINBASEPATH + 'source/tools/ManualExamples/obj-intel64/inscount0.so'
 ```
 
-### Help
-
-
-
+## Help
 ```sh
-usage: pintool2.py [-h] [-e] [-l LEN] [-c NUMBER] [-b CHARACTER] [-a ARCH]
-                   [-i INITPASS] [-s SIMBOL] [-d EXPRESSION] [-r]
-                   Filename
+usage: pintool3.py [-h] [-e] [-l PASSLEN] [-c CHARNUM] [-b EXCHAR] [-a ARCH] [-i INITPASS] [-s SYMBFILL] [-d EXPRESSION] [-r] filename
 
 positional arguments:
-  Filename       Program for playing with Pin Tool
+  filename       Program for playing with Pin Tool
 
-optional arguments:
+options:
   -h, --help     show this help message and exit
-  -e             Study the password length, for example -e -l 40, with 40
-                 characters
-  -l LEN         Length of password (Default: 10 )
-  -c NUMBER      Charset definition for brute force (1-Lowercase, 2-Uppecase,
-                 3-Numbers, 4-Hexadecimal, 5-Punctuation, 6-All)
-  -b CHARACTER   Add characters for the charset, example -b _-
+  -e             Study the password length, for example -e -l 40, with 40 characters
+  -l PASSLEN     Length of password (Default: 10 )
+  -c CHARNUM     Charset definition for brute force (1-Lowercase, 2-Uppecase, 3-Numbers, 4-Hexadecimal, 5-Punctuation, 6-All)
+  -b EXCHAR      Add characters for the charset, example -b _-
   -a ARCH        Program architecture 32 or 64 bits, -a 32 or -a 64
   -i INITPASS    Inicial password characters, example -i CTF{
-  -s SIMBOL      Simbol for complete all password (Default: _ )
-  -d EXPRESSION  Difference between instructions that are successful or not
-                 (Default: != 0, example -d '== -12', -d '=> 900', -d '<= 17'
-                 or -d '!= 32')
+  -s SYMBFILL    Symbol for complete all password (Default: _ )
+  -d EXPRESSION  Difference between instructions that are successful or not (Default: != 0, example -d '== -12', -d '=> 900', -d '<= 17' or -d '!= 32')
   -r             Start in reverse order
 
 Examples:
-  ./pintool2.py -l 30 -c 1,2,3 -b _{} -s - baleful
-  ./pintool2.py -l 37 -c 4 -i CTF{ -b }_ -s - -d '=> 651' reverse400
-  ./pintool2.py -c 1,2,3 -b _ -s - -a 64 -l 28 wyvern
-  ./pintool2.py -r -l 32 -c 1,2,3 -b _{$} -s - 01f47d58806a8264cd4b2b97b9dabb4a
+  ./pintool3.py -l 30 -c 1,2,3 -b _{} -s - baleful
+  ./pintool3.py -l 37 -c 4 -i CTF{ -b }_ -s - -d '=> 651' reverse400
+  ./pintool3.py -c 1,2,3 -b _ -s - -a 64 -l 28 wyvern
+  ./pintool3.py -r -l 32 -c 1,2,3 -b _{$} -s - 01f47d58806a8264cd4b2b97b9dabb4a
 ```
 
-
-### Examples
+## Examples
 **Baleful - picoCTF 2014**
 ```sh
 $ ./pintool2.py -l 30 -c 1,2,3 -b _{} -s - baleful

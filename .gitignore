@@ -1,5 +1,2 @@
+*.out
 .git
-.project
-.pydevproject
-*.pyc
-.settings
