@@ -1,2 +1,4 @@
-*.out
 .git
+*.out
+*.cast
+*.log

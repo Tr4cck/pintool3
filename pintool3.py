@@ -15,7 +15,7 @@ import argparse
 import re
 
 
-PINBASEPATH = '/home/track/CTF-Tools/pin-3.25-98650-g8f6168173-gcc-linux/'
+PINBASEPATH = '/home/track/CTF-Tools/pin-3.25-gcc-linux/'
 PIN = PINBASEPATH + 'pin'
 INSCOUNT32 = PINBASEPATH + 'source/tools/ManualExamples/obj-ia32/inscount0.so'
 INSCOUNT64 = PINBASEPATH + 'source/tools/ManualExamples/obj-intel64/inscount0.so'
