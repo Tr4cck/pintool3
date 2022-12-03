@@ -84,7 +84,7 @@ def pin(passwd):
 def lengthdetect(passlen):
     inicialdifference = 0
     for i in range(1, passlen+1):
-        password = "_" * i
+        password = "/" * i
         inscount = pin(password)
 
         if inicialdifference == 0:
@@ -96,41 +96,42 @@ def solve(initpass, passlen, symbfill, diffinst, charset, expression, reverse):
     initlen = len(initpass)
     for i in range(initlen, passlen):
         tempassword = initpass + symbfill * (passlen-i)
-        inicialdifference = 0
+        initdiff = 0
         for char in charset:
             password = tempassword[:i] + char + tempassword[i+1:]
             if reverse:
                 password = password[::-1]
 
             inscount = pin(password)
-            if inicialdifference == 0:
-                inicialdifference = inscount
+            if initdiff == 0:
+                initdiff = inscount
 
-            difference = inscount-inicialdifference
-            print("%s = %d difference %d instructions" % (password, inscount, difference))
-            sys.stdout.write("\033[F")
+            difference = inscount - initdiff
+            print(f"{password} <= \033[1;31m{difference}\033[0m + {inscount} instructions")
+            sys.stdout.write('\033[F')
             cmpsym = expression.split()[0]
             match cmpsym:
                 case '!=':
-                    if difference != int(diffinst):
-                        print("%s = %d difference %d instructions" %(password, inscount, difference))
+                    if difference != diffinst:
+                        print(f"{password} <= \033[1;31m{difference}\033[0m + {inscount} instructions")
                         initpass += char
                         break
+
                 case '==':
-                    if difference == int(diffinst):
-                        print("%s = %d difference %d instructions" %(password, inscount, difference))
+                    if difference == diffinst:
+                        print(f"{password} <= \033[1;31m{difference}\033[0m + {inscount} instructions")
                         initpass += char
                         break
 
                 case '<=':
-                    if difference <= int(diffinst):
-                        print("%s = %d difference %d instructions" %(password, inscount, difference))
+                    if difference <= diffinst:
+                        print(f"{password} <= \033[1;31m{difference}\033[0m + {inscount} instructions")
                         initpass += char
                         break
                 
                 case '=>':
-                    if difference >= int(diffinst):
-                        print("%s = %d difference %d instructions" %(password, inscount, difference))
+                    if difference >= diffinst:
+                        print(f"{password} <= \033[1;31m{difference}\033[0m + {inscount} instructions")
                         initpass += char
                         break
 
@@ -138,11 +139,11 @@ def solve(initpass, passlen, symbfill, diffinst, charset, expression, reverse):
                     print("Unknown value for -d option")
                     sys.exit()
 
-            if char == charset[-1]:
-                print("\n\nPassword not found, try to change charset...\n")
-                sys.exit()
+        else:
+            print("\n\nPassword not found, try to change charset...\n")
+            sys.exit()
 
-    return password.replace("\\", "", 1)
+    return password
 
 if __name__ == '__main__':
     args = start()
@@ -152,7 +153,7 @@ if __name__ == '__main__':
     charset = symbfill + getCharset(args.charnum) + ''.join(args.exchar)
     arch = ''.join(args.arch)
     expression = ''.join(args.expression).strip()
-    diffinst = expression.split()[1]
+    diffinst = int(expression.split()[1])
     study = args.study
     reverse = args.reverse
 
